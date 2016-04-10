@@ -22,11 +22,16 @@
   "homepage": "https://github.com/sarbbottam/watch-and-rsync",
   "devDependencies": {
     "commitizen": "^2.7.6",
-    "cz-conventional-changelog": "^1.1.5"
+    "cz-conventional-changelog": "^1.1.5",
+    "ghooks": "^1.2.0",
+    "validate-commit-msg": "^2.5.0"
   },
    "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
+    },
+    "ghooks": {
+      "commit-msg": "validate-commit-msg"
     }
   }
 }
