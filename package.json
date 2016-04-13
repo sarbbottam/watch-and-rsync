@@ -4,7 +4,7 @@
   "description": "watch and rsync directories across system",
   "main": "index.js",
   "scripts": {
-    "test": "echo 'hang on tiger ... \nthere is no source code yet'"
+    "start": "node src/index.js"
   },
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "ghooks": "^1.2.0",
     "validate-commit-msg": "^2.5.0"
   },
-   "config": {
+  "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
     },
