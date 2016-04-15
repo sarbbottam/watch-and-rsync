@@ -4,7 +4,8 @@
   "description": "watch and rsync directories across system",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js ./test/fixtures start",
+    "stop": "node src/index.js ./test/fixtures stop"
   },
   "repository": {
     "type": "git",
