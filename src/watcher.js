@@ -13,4 +13,4 @@ function watch(dir, command) {
   });
 }
 
-watch(process.argv[2]);
+watch(process.argv[2], process.argv[3]);

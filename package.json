@@ -4,8 +4,8 @@
   "description": "watch and rsync directories across system",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js ./test/fixtures start",
-    "stop": "node src/index.js ./test/fixtures stop"
+    "start": "node src/index.js -o=start -s=./test/fixtures/source -t=./test/fixtures/target",
+    "stop": "node src/index.js -o=stop -s=./test/fixtures/source -t=./test/fixtures/target "
   },
   "repository": {
     "type": "git",
@@ -34,5 +34,10 @@
     "ghooks": {
       "commit-msg": "validate-commit-msg"
     }
+  },
+  "dependencies": {
+    "tildify": "^1.2.0",
+    "username": "^2.1.0",
+    "yargs": "^4.6.0"
   }
 }
