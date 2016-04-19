@@ -30,7 +30,7 @@ const hostname = argv.h
 const command = `'rsync -a --delete ${tildify(source)}/ ${target}'`
 
 if (argv.o === 'start') {
-  exec('nohup node ./src/watcher.js ' + source + ' ' + command + '> /dev/null 2>&1 &', function(error, stdout, stderr) {
+  exec(`nohup ./node_modules/.bin/watch-and-exec -d=${source} -c=${command} > /dev/null 2>&1 &`, function(error, stdout, stderr) {
     console.log('watching ' + source + ' for changes');
   });
 }
