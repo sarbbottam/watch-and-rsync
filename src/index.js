@@ -30,7 +30,7 @@ const hostname = argv.h
 const command = `'rsync -a --delete ${tildify(source)}/ ${target}'`
 
 if (argv.o === 'start') {
-  exec(`nohup ./node_modules/.bin/watch-and-exec -d=${source} -c=${command} > /dev/null 2>&1 &`, function(error, stdout, stderr) {
+  exec(`nohup ./node_modules/.bin/watch-and-exec -d=${source} -c=${command} > /dev/null 2>&1 &`, (error, stdout, stderr) => {
     console.log('watching ' + source + ' for changes');
   });
 }
@@ -38,7 +38,7 @@ if (argv.o === 'start') {
 if (argv.o === 'stop') {
   // http://stackoverflow.com/questions/31570240/nodejs-get-process-id-from-within-shell-script-exec
   // http://stackoverflow.com/questions/12941083/get-the-output-of-a-shell-command-in-node-js
-  exec('ps -ef | grep ' + source + ' | grep -v grep | awk \'{print $2}\'', function(error, stdout, stderr) {
+  exec('ps -ef | grep ' + source + ' | grep -v grep | awk \'{print $2}\'', (error, stdout, stderr) => {
     const pid = stdout.split('\n')[0];
     exec('kill -9 ' + pid);
   });
