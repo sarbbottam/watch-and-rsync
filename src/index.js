@@ -51,8 +51,9 @@ if (argv.o === 'start') {
 if (argv.o === 'stop') {
   // http://stackoverflow.com/questions/31570240/nodejs-get-process-id-from-within-shell-script-exec
   // http://stackoverflow.com/questions/12941083/get-the-output-of-a-shell-command-in-node-js
-  exec(`ps -ef | grep ${source} | grep -v grep | awk '{print $2}'`, (error, stdout) => {
-    const pid = stdout.split('\n')[0];
-    exec(`kill -9 ${pid}`);
+  exec(`ps -ef | grep ${source} | grep -v grep | awk '{print $2}' | xargs kill -9`, error => {
+    if (!error) {
+      console.log(`not watching ${source} for changes`);
+    }
   });
 }
