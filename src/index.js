@@ -10,8 +10,7 @@ const options = {
   source: ['s'],
   target: ['t'],
   host: ['h'],
-  user: ['u'],
-  command: ['c']
+  user: ['u']
 };
 
 var argv = require('yargs')
