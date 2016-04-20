@@ -10,6 +10,8 @@ npm i watch-and-rsync -g
 watch-and-rsync -o=start -s=path/to/dir/that/needs/to/be/synced -h=remote-host-(name|ip)
 ```
 
+ ![demo - gif](http://i.imgur.com/2a7ptkn.gif)
+
 ## Why?
 
 I work across Mac and Linux.
