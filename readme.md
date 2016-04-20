@@ -3,6 +3,13 @@ watch-and-rsync
 
 `watch` and `rsync` directories across system
 
+## Usage
+
+```sh
+npm i watch-and-rsync -g
+watch-and-rsync -o=start -s=path/to/dir/that/needs/to/be/synced -h=remote-host-(name|ip)
+```
+
 ## Why?
 
 I work across Mac and Linux.
