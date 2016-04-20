@@ -6,7 +6,7 @@
     "src/index.js"
   ],
   "bin": {
-    "watch-and-exec": "./src/index.js"
+    "watch-and-rsync": "./src/index.js"
   },
   "scripts": {
     "test": "xo && node test/index.js",
