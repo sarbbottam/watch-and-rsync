@@ -1,10 +1,10 @@
 {
   "name": "watch-and-rsync",
-  "version": "0.0.0",
   "description": "watch and rsync directories across system",
   "main": "index.js",
   "scripts": {
-    "test": "xo && node test/index.js"
+    "test": "xo && node test/index.js",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
@@ -25,7 +25,8 @@
     "cz-conventional-changelog": "^1.1.5",
     "ghooks": "^1.2.0",
     "validate-commit-msg": "^2.5.0",
-    "xo": "^0.14.0"
+    "xo": "^0.14.0",
+    "semantic-release": "^4.3.5"
   },
   "config": {
     "commitizen": {
