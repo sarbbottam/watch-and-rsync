@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // nohup.js - https://gist.github.com/supersha/6913695
 const exec = require('child_process').exec;
 const path = require('path');
