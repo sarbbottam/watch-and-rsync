@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js -o=start -s=./test/fixtures/source -t=./test/fixtures/target",
-    "stop": "node src/index.js -o=stop -s=./test/fixtures/source -t=./test/fixtures/target "
+    "stop": "node src/index.js -o=stop -s=./test/fixtures/source -t=./test/fixtures/target ",
+    "test": "xo"
   },
   "repository": {
     "type": "git",
@@ -25,7 +26,8 @@
     "commitizen": "^2.7.6",
     "cz-conventional-changelog": "^1.1.5",
     "ghooks": "^1.2.0",
-    "validate-commit-msg": "^2.5.0"
+    "validate-commit-msg": "^2.5.0",
+    "xo": "^0.14.0"
   },
   "config": {
     "commitizen": {
@@ -40,5 +42,9 @@
     "username": "^2.1.0",
     "watch-and-exec": "^1.0.0",
     "yargs": "^4.6.0"
+  },
+  "xo": {
+    "esnext": true,
+    "space": true
   }
 }
