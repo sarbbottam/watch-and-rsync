@@ -19,70 +19,81 @@ const options = {
 };
 
 const argv = require('yargs')
-  .demand(['o', 's'])
+  .demand(['o'])
   .strict()
   .alias(options)
   .argv;
 
-let source;
-let target;
-argv.s = untildify(argv.s);
-argv.t = untildify(argv.t);
+if (argv.o === 'start' || argv.o === 'stop') {
+  let source;
+  let target;
+  argv.s = untildify(argv.s);
+  argv.t = untildify(argv.t);
 
-if (path.isAbsolute(argv.s)) {
-  source = argv.s;
-} else {
-  source = path.join(process.cwd(), argv.s);
-}
-
-if (argv.t) {
-  if (path.isAbsolute(argv.t)) {
-    target = argv.t;
+  if (path.isAbsolute(argv.s)) {
+    source = argv.s;
   } else {
-    target = path.join(process.cwd(), argv.t);
+    source = path.join(process.cwd(), argv.s);
   }
-} else {
-  target = source;
+
+  if (argv.t) {
+    if (path.isAbsolute(argv.t)) {
+      target = argv.t;
+    } else {
+      target = path.join(process.cwd(), argv.t);
+    }
+  } else {
+    target = source;
+  }
+
+  target = tildify(target);
+
+  try {
+    fs.accessSync(source, fs.F_OK);
+  } catch (error) {
+    console.log('source directory does not exist');
+    process.exit(1);
+  }
+
+  let ssh = '';
+  const user = argv.u || username.sync();
+  const hostname = argv.h;
+  // should be generated
+  const exclude = '--exclude node_modules';
+
+  if (hostname) {
+    target = `${user}@${hostname}:${target}`;
+    ssh = 'ssh';
+  }
+
+  // https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories-on-a-vps
+  const command = `'rsync -azOte ${ssh} --delete ${exclude} ${tildify(source)}/ ${target}'`;
+  const watcher = path.join(__dirname, '../node_modules/.bin/watch-and-exec');
+
+  if (argv.o === 'start') {
+    exec(`nohup ${watcher} -d=${source} -c=${command} > /dev/null 2>&1 &`, () => {
+      console.log(`watching ${source} for changes`);
+      console.log(`via ${watcher}`);
+      console.log(`to excute ${command}`);
+    });
+  }
+
+  if (argv.o === 'stop') {
+    exec(`ps -ef | grep ${source} | grep -v grep | awk '{print $2}' | xargs kill -9`, error => {
+      if (!error) {
+        console.log(`not watching ${source} for changes`);
+      }
+    });
+  }
 }
 
-target = tildify(target);
-
-try {
-  fs.accessSync(source, fs.F_OK);
-} catch (error) {
-  console.log('source directory does not exist');
-  process.exit(1);
-}
-
-let ssh = '';
-const user = argv.u || username.sync();
-const hostname = argv.h;
-// should be generated
-const exclude = '--exclude node_modules';
-
-if (hostname) {
-  target = `${user}@${hostname}:${target}`;
-  ssh = 'ssh';
-}
-
-// https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories-on-a-vps
-const command = `'rsync -azOte ${ssh} --delete ${exclude} ${tildify(source)}/ ${target}'`;
-const watcher = path.join(__dirname, '../node_modules/.bin/watch-and-exec');
-
-if (argv.o === 'start') {
-  exec(`nohup ${watcher} -d=${source} -c=${command} > /dev/null 2>&1 &`, () => {
-    console.log(`watching ${source} for changes`);
-    console.log(`via ${watcher}`);
-    console.log(`to excute ${command}`);
-  });
-}
-
-if (argv.o === 'stop') {
+if (argv.o === 'list') {
   // http://stackoverflow.com/questions/31570240/nodejs-get-process-id-from-within-shell-script-exec
   // http://stackoverflow.com/questions/12941083/get-the-output-of-a-shell-command-in-node-js
-  exec(`ps -ef | grep ${source} | grep -v grep | awk '{print $2}' | xargs kill -9`, error => {
-    if (!error) {
-      console.log(`not watching ${source} for changes`);
+  exec(`ps -ef | grep watch-and-rsync/node_modules/.bin/watch-and-exec | grep -v grep | awk '{print $2"\t"substr($10,4)}'`, (error, stdout) => {
+    if (!error && stdout) {
+      console.log('PID\tDIR');
+      console.log(stdout);
     }
   });
 }
