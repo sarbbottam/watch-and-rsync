@@ -5,6 +5,7 @@
 // nohup.js - https://gist.github.com/supersha/6913695
 const exec = require('child_process').exec;
 const path = require('path');
+const fs = require('fs');
 const tildify = require('tildify');
 const untildify = require('untildify');
 const username = require('username');
@@ -45,6 +46,13 @@ if (argv.t) {
 }
 
 target = tildify(target);
+
+try {
+  fs.accessSync(source, fs.F_OK);
+} catch (error) {
+  console.log('source directory does not exist');
+  process.exit(1);
+}
 
 let ssh = '';
 const user = argv.u || username.sync();
