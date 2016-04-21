@@ -30,9 +30,10 @@
     "commitizen": "^2.7.6",
     "cz-conventional-changelog": "^1.1.5",
     "ghooks": "^1.2.0",
+    "semantic-release": "^4.3.5",
+    "untildify": "^2.1.0",
     "validate-commit-msg": "^2.5.0",
-    "xo": "^0.14.0",
-    "semantic-release": "^4.3.5"
+    "xo": "^0.14.0"
   },
   "config": {
     "commitizen": {
