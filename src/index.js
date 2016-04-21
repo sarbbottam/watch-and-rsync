@@ -6,6 +6,7 @@
 const exec = require('child_process').exec;
 const path = require('path');
 const tildify = require('tildify');
+const untildify = require('untildify');
 const username = require('username');
 
 const options = {
@@ -22,9 +23,29 @@ const argv = require('yargs')
   .alias(options)
   .argv;
 
-const source = path.join(process.cwd(), argv.s);
-argv.t = argv.t || argv.s;
-let target = tildify(path.join(process.cwd(), argv.t));
+let source;
+let target;
+argv.s = untildify(argv.s);
+argv.t = untildify(argv.t);
+
+if (path.isAbsolute(argv.s)) {
+  source = argv.s;
+} else {
+  source = path.join(process.cwd(), argv.s);
+}
+
+if (argv.t) {
+  if (path.isAbsolute(argv.t)) {
+    target = argv.t;
+  } else {
+    target = path.join(process.cwd(), argv.t);
+  }
+} else {
+  target = source;
+}
+
+target = tildify(target);
+
 let ssh = '';
 const user = argv.u || username.sync();
 const hostname = argv.h;
