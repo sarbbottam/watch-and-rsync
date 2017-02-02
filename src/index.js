@@ -67,7 +67,7 @@ if (argv.o === 'start' || argv.o === 'stop') {
   }
 
   // https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories-on-a-vps
-  const command = `'rsync -azOte ${ssh} --delete ${exclude} ${tildify(source)}/ ${target}'`;
+  const command = `'rsync -azOte ${ssh} --inplace --delete ${exclude} ${tildify(source)}/ ${target}'`;
   const watcher = path.join(__dirname, '../node_modules/.bin/watch-and-exec');
 
   if (argv.o === 'start') {
