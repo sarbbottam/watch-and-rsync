@@ -11,14 +11,16 @@ const untildify = require('untildify');
 const username = require('username');
 
 const DEFAULT_EXCLUDES = [
-  'bower_components',
-  'build',
-  'dist',
   '.eyeglass_cache',
   '.gradle',
-  'node_modules',
   '.pemberlyrc',
-  'tmp'
+  'bower_components',
+  'build',
+  'logs',
+  'node_modules',
+  'pemberly',
+  'tmp',
+  '*.jar'
 ];
 
 const options = {
@@ -71,13 +73,12 @@ if (argv.o === 'start' || argv.o === 'stop') {
   const user = argv.u || username.sync();
   const hostname = argv.h;
 
-  let exclude;
-  // https://askubuntu.com/questions/320458/how-to-exclude-multiple-directories-with-rsync#answer-525513
+  let excludes = DEFAULT_EXCLUDES;
   if (argv.e) {
-    exclude = `--exclude={${argv.e}}`;
-  } else {
-    exclude = `--exclude={${DEFAULT_EXCLUDES.join(',')}}`;
+    excludes = argv.e.split(',');
   }
+
+  const exclude = excludes.map(item => `--exclude ${item}`).join(' ');
 
   if (hostname) {
     target = `${user}@${hostname}:${target}`;
