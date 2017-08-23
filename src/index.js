@@ -74,9 +74,9 @@ if (argv.o === 'start' || argv.o === 'stop') {
   let exclude;
   // https://askubuntu.com/questions/320458/how-to-exclude-multiple-directories-with-rsync#answer-525513
   if (argv.e) {
-    exclude = `--exclude={${argv.e}}`
+    exclude = `--exclude={${argv.e}}`;
   } else {
-    exclude = `--exclude={${DEFAULT_EXCLUDES.join(',')}}`
+    exclude = `--exclude={${DEFAULT_EXCLUDES.join(',')}}`;
   }
 
   if (hostname) {
