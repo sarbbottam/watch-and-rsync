@@ -10,8 +10,20 @@ const tildify = require('tildify');
 const untildify = require('untildify');
 const username = require('username');
 
+const DEFAULT_EXCLUDES = [
+  'bower_components',
+  'build',
+  'dist',
+  '.eyeglass_cache',
+  '.gradle',
+  'node_modules',
+  '.pemberlyrc',
+  'tmp'
+];
+
 const options = {
   option: ['o'],
+  exclude: ['e'],
   source: ['s'],
   target: ['t'],
   host: ['h'],
@@ -58,8 +70,14 @@ if (argv.o === 'start' || argv.o === 'stop') {
   let ssh = '';
   const user = argv.u || username.sync();
   const hostname = argv.h;
-  // should be generated
-  const exclude = '--exclude node_modules';
+
+  let exclude;
+
+  if (argv.e) {
+    exclude = `--exclude={${argv.e}}`
+  } else {
+    exclude = `--exclude={${DEFAULT_EXCLUDES.join(',')}}`
+  }
 
   if (hostname) {
     target = `${user}@${hostname}:${target}`;
