@@ -28,7 +28,6 @@ if (argv.o === 'start' || argv.o === 'stop') {
   let source;
   let target;
   argv.s = untildify(argv.s);
-  argv.t = untildify(argv.t);
 
   if (path.isAbsolute(argv.s)) {
     source = argv.s;
@@ -37,6 +36,7 @@ if (argv.o === 'start' || argv.o === 'stop') {
   }
 
   if (argv.t) {
+    argv.t = untildify(argv.t);
     if (path.isAbsolute(argv.t)) {
       target = argv.t;
     } else {
