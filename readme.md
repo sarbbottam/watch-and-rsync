@@ -13,7 +13,30 @@ watch-and-rsync
 
 ```sh
 npm i watch-and-rsync -g
-watch-and-rsync -o=start -s=path/to/dir/that/needs/to/be/synced -h=remote-host-(name|ip) -e=comma,delimited,items
+
+watch-and-rsync -o=start -c=path/to/the/config.js
+
+watch-and-rsync -o=stop -c=path/to/the/config.js
+
+watch-and-rsync -o=list
+```
+
+```
+// config.js
+module.exports = {
+  'source': 'path/to/the/source/',
+  'target': 'path/to/the/target/',
+  'host': 'IP or hostname',
+  'excludes': [
+    '.git', // for faster syncing
+    'build',
+    'dist',
+    'logs',
+    'node_modules',
+    'tmp',
+    ...
+  ]
+}
 ```
 
  ![demo - gif](http://i.imgur.com/2a7ptkn.gif)

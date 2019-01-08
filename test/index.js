@@ -7,7 +7,7 @@ const exec = require('child_process').exec;
 exec(`mkdir -p ./test/fixtures/source`);
 exec(`mkdir -p ./test/fixtures/target`);
 
-exec(`./src/index.js -o=start -s=./test/fixtures/source -t=./test/fixtures/target`, error => {
+exec(`./src/index.js -o=start -c=./test/config.js`, error => {
   assert.equal(error, null);
 
   setTimeout(() => {

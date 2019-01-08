@@ -1,4 +1,5 @@
 {
+  "version": "0.0.0",
   "name": "watch-and-rsync",
   "description": "watch and rsync directories across system",
   "main": "src/index.js",
@@ -27,12 +28,11 @@
   },
   "homepage": "https://github.com/sarbbottam/watch-and-rsync",
   "devDependencies": {
-    "commitizen": "^2.7.6",
-    "cz-conventional-changelog": "^1.1.5",
-    "ghooks": "^1.2.0",
-    "semantic-release": "^4.3.5",
+    "commitizen": "^3.0.5",
+    "cz-conventional-changelog": "^2.1.0",
+    "ghooks": "^2.0.4",
     "validate-commit-msg": "^2.5.0",
-    "xo": "^0.14.0"
+    "xo": "^0.23.0"
   },
   "config": {
     "commitizen": {
@@ -44,10 +44,10 @@
   },
   "dependencies": {
     "tildify": "^1.2.0",
-    "untildify": "^2.1.0",
-    "username": "^2.1.0",
+    "untildify": "^3.0.3",
+    "username": "^4.0.0",
     "watch-and-exec": "^1.0.0",
-    "yargs": "^4.6.0"
+    "yargs": "^12.0.5"
   },
   "xo": {
     "esnext": true,
