@@ -2,8 +2,8 @@
 
 'use strict';
 
-// nohup.js - https://gist.github.com/supersha/6913695
-const exec = require('child_process').exec;
+// https://gist.github.com/supersha/6913695 - nohup.js
+const {exec} = require('child_process');
 const path = require('path');
 const fs = require('fs');
 const tildify = require('tildify');
@@ -15,13 +15,12 @@ const options = {
   config: ['c']
 };
 
-const argv = require('yargs')
+const {argv} = require('yargs')
   .demand(['o'])
   .strict()
-  .alias(options)
-  .argv;
+  .alias(options);
 
-const option = argv.option;
+const {option} = argv;
 
 if (option === 'start' || option === 'stop') {
   let configFile = argv.c;
@@ -46,8 +45,7 @@ if (option === 'start' || option === 'stop') {
     process.exit(1);
   }
 
-  let source = config.source;
-  let target = config.target;
+  let {source, target} = config;
 
   if (!source) {
     console.log('source directory needs to be specified');
@@ -81,8 +79,8 @@ if (option === 'start' || option === 'stop') {
   target = tildify(target);
 
   let ssh = '';
-  const user = config.user || username.sync();
-  const host = config.host;
+  let {user, host} = config;
+  user = user || username.sync();
 
   if (host) {
     target = `${user}@${host}:${target}`;
@@ -118,7 +116,7 @@ if (option === 'start' || option === 'stop') {
 if (argv.o === 'list') {
   // http://stackoverflow.com/questions/31570240/nodejs-get-process-id-from-within-shell-script-exec
   // http://stackoverflow.com/questions/12941083/get-the-output-of-a-shell-command-in-node-js
-  exec(`ps -ef | grep watch-and-rsync/node_modules/.bin/watch-and-exec | grep -v grep | awk '{print $2"\t"substr($10,4)}'`, (error, stdout) => {
+  exec(`ps -ef | grep watch-and-rsync/node_modules/.bin/watch-and-exec | grep -v grep | awk '{print $2"\t"substr($10,4)}'`, (error, stdout) => { // eslint-disable-line quotes
     if (!error && stdout) {
       console.log('PID\tDIR');
       console.log(stdout);
